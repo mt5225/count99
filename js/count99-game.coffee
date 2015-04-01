@@ -1,7 +1,7 @@
 c99 = c99 or {}
 c99.Game = do ->
   Count99Game = ->
-    console.log('count 99 game starts')
+    console.log('count99 game starts')
     @canvas = document.getElementById('game-canvas')
     @stage = new (createjs.Stage)(@canvas)
     @stage.name = 'Main Stage'
