@@ -13,7 +13,7 @@ c99.Game = do ->
     @stage.name = 'Main Stage'
     @gameInit()  #init game
 
-    restartButton = document.getElementById('restart-game')
+    restartButton = document.getElementById('restart-button')
     restartButton.onclick = ((evt) ->
       gameOverScene = document.getElementById("gameover")
       gameOverScene.classList.remove("gameover-appear")
@@ -77,13 +77,9 @@ c99.GameObject = do ->
 
   p.initialize = ->
     @Container_initialize()
-    shape = new (createjs.Shape)
-    shape.name = @number
-    shape.graphics.setStrokeStyle(1)
-    shape.graphics.beginStroke('#000')
-    shape.graphics.beginFill('#efefef')
-    shape.graphics.rect(0,0,@width,@height)
-    @.addChild(shape)
+    img = new (createjs.Bitmap)('image/tile.png')
+    img.name = @number
+    @.addChild(img)
 
     numText = new (createjs.Text)(@number, '24px Helvetica', '#ac1000')
     numText.x = @width / 2

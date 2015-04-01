@@ -13,7 +13,7 @@
       this.stage = new createjs.Stage(this.canvas);
       this.stage.name = 'Main Stage';
       this.gameInit();
-      restartButton = document.getElementById('restart-game');
+      restartButton = document.getElementById('restart-button');
       return restartButton.onclick = (function(evt) {
         var gameOverScene;
         gameOverScene = document.getElementById("gameover");
@@ -70,15 +70,11 @@
     p.height = 80;
     p.Container_initialize = p.initialize;
     p.initialize = function() {
-      var numText, shape;
+      var img, numText;
       this.Container_initialize();
-      shape = new createjs.Shape;
-      shape.name = this.number;
-      shape.graphics.setStrokeStyle(1);
-      shape.graphics.beginStroke('#000');
-      shape.graphics.beginFill('#efefef');
-      shape.graphics.rect(0, 0, this.width, this.height);
-      this.addChild(shape);
+      img = new createjs.Bitmap('image/tile.png');
+      img.name = this.number;
+      this.addChild(img);
       numText = new createjs.Text(this.number, '24px Helvetica', '#ac1000');
       numText.x = this.width / 2;
       numText.y = this.height / 2;
