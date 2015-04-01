@@ -11,7 +11,8 @@ c99.Game = do ->
     @canvas = document.getElementById('game-canvas')
     @stage = new (createjs.Stage)(@canvas)
     @stage.name = 'Main Stage'
-    @gameInit()
+    @gameInit()  #init game
+
     restartButton = document.getElementById('restart-game')
     restartButton.onclick = ((evt) ->
       gameOverScene = document.getElementById("gameover")
@@ -25,15 +26,6 @@ c99.Game = do ->
     @totalTile = 3
     @nextCountLabel = document.getElementById('next-count')
 
-    # make 10 tiles
-    for i in [@totalTile..1]
-      tile = new (c99.GameObject)(i)
-      tile.x = Math.random()*(@canvas.width - tile.width)
-      tile.y = Math.random()*(@canvas.height - tile.height)
-      console.log("position: #{tile.x} #{tile.y}")
-      tile.on 'click', @tileOnPress.bind(@)
-      @stage.addChild tile
-
     # the onPress event handler for the tile
     @tileOnPress = (evt)->
       console.log "Obj: #{evt.target} clicked in Stage: #{@stage}"
@@ -46,10 +38,17 @@ c99.Game = do ->
         if(@nextCount > @totalTile)
             @gameOver()
 
+    # make 10 tiles
+    for i in [@totalTile..1]
+      tile = new (c99.GameObject)(i)
+      tile.x = Math.random()*(@canvas.width - tile.width)
+      tile.y = Math.random()*(@canvas.height - tile.height)
+      console.log("position: #{tile.x} #{tile.y}")
+      tile.on 'click', @tileOnPress.bind(@)
+      @stage.addChild tile
+
     #update the stage
     @stage.update()
-
-
 
   #game over logic
   Count99Game.prototype.gameOver = ->
