@@ -7,17 +7,38 @@
   c99.Game = (function() {
     var Count99Game;
     Count99Game = function() {
-      var i, j, tile;
-      console.log('count 99 game starts');
+      var restartButton;
+      console.log('count99 game starts');
       this.canvas = document.getElementById('game-canvas');
       this.stage = new createjs.Stage(this.canvas);
       this.stage.name = 'Main Stage';
+      this.gameInit();
+      restartButton = document.getElementById('restart-game');
+      return restartButton.onclick = (function(evt) {
+        var gameOverScene;
+        gameOverScene = document.getElementById("gameover");
+        gameOverScene.classList.remove("gameover-appear");
+        return this.gameInit();
+      }).bind(this);
+    };
+    Count99Game.prototype.gameInit = function() {
+      var i, j, ref, tile;
+      this.nextCount = 1;
+      this.totalTile = 3;
+      this.nextCountLabel = document.getElementById('next-count');
       this.tileOnPress = function(evt) {
         console.log("Obj: " + evt.target + " clicked in Stage: " + this.stage);
-        this.stage.removeChild(evt.target.parent);
-        return this.stage.update();
+        if (evt.target.name === this.nextCount) {
+          this.stage.removeChild(evt.target.parent);
+          this.stage.update();
+          this.nextCount++;
+          this.nextCountLabel.innerHTML = this.nextCount;
+          if (this.nextCount > this.totalTile) {
+            return this.gameOver();
+          }
+        }
       };
-      for (i = j = 10; j >= 1; i = --j) {
+      for (i = j = ref = this.totalTile; ref <= 1 ? j <= 1 : j >= 1; i = ref <= 1 ? ++j : --j) {
         tile = new c99.GameObject(i);
         tile.x = Math.random() * (this.canvas.width - tile.width);
         tile.y = Math.random() * (this.canvas.height - tile.height);
@@ -26,6 +47,13 @@
         this.stage.addChild(tile);
       }
       return this.stage.update();
+    };
+    Count99Game.prototype.gameOver = function() {
+      var gameOverScene;
+      this.nextCount = 1;
+      this.nextCountLabel.innerHTML = this.nextCount;
+      gameOverScene = document.getElementById("gameover");
+      return gameOverScene.classList.add("gameover-appear");
     };
     return Count99Game;
   })();
