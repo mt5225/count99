@@ -12,6 +12,7 @@
       this.canvas = document.getElementById('game-canvas');
       this.stage = new createjs.Stage(this.canvas);
       this.stage.name = 'Main Stage';
+      createjs.Touch.enable(this.stage);
       preloader = new c99.Preloader(this);
       preloader.loadGraphics();
       restartButton = document.getElementById('restart-button');
@@ -122,7 +123,7 @@
       img = new createjs.Bitmap(c99.graphics.tile.path);
       img.name = this.number;
       this.addChild(img);
-      numText = new createjs.Text(this.number, '24px Helvetica', '#ac1000');
+      numText = new createjs.Text(this.number, '24px PFTempestaFiveCompressed-Regular,sans-serif', '#ac1000');
       numText.x = this.width / 2;
       numText.y = this.height / 2;
       numText.textAlign = 'center';

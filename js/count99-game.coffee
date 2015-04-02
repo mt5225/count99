@@ -11,6 +11,7 @@ c99.Game = do ->
     @canvas = document.getElementById('game-canvas')
     @stage = new (createjs.Stage)(@canvas)
     @stage.name = 'Main Stage'
+    createjs.Touch.enable(@stage)
     #init game
     preloader = new (c99.Preloader)(@)
     preloader.loadGraphics()
@@ -114,7 +115,7 @@ c99.GameObject = do ->
     img.name = @number
     @.addChild(img)
 
-    numText = new (createjs.Text)(@number, '24px Helvetica', '#ac1000')
+    numText = new (createjs.Text)(@number, '24px PFTempestaFiveCompressed-Regular,sans-serif', '#ac1000')
     numText.x = @width / 2
     numText.y = @height /2
     numText.textAlign = 'center'

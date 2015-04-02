@@ -1,8 +1,12 @@
 {
   "name": "C99_Game",
+  "description": "C99_Game",
   "version": "0.1.0",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-connect": "^0.2.0"
+  }
+  "scripts": {
+    "start": "grunt connect"
   }
 }
