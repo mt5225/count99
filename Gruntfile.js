@@ -7,7 +7,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     connect: {
       server: {
-        port: 8282,
+        port: 80,
         base: ".",
         keepalive: true
       }
