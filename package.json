@@ -2,8 +2,9 @@
   "name": "C99_Game",
   "description": "C99_Game",
   "version": "0.1.0",
-  "devDependencies": {
+  "dependencies": {
     "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.13",
     "grunt-connect": "^0.2.0"
   },
   "private": true,
