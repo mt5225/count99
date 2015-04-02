@@ -6,7 +6,12 @@
     "grunt": "~0.4.2",
     "grunt-connect": "^0.2.0"
   },
+  "private": true,
   "scripts": {
-    "start": "grunt connect"
+    "start": "grunt connect:server"
+    "postinstall": "npm run start"
+  }
+  "engines": {
+   "node": ">=0.10"
   }
 }
