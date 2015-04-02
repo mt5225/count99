@@ -11,7 +11,7 @@
   "scripts": {
     "start": "grunt connect:server",
     "postinstall": "npm run start"
-  }
+  },
   "engines": {
    "node": ">=0.10"
   }
