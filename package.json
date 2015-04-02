@@ -5,7 +5,7 @@
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-connect": "^0.2.0"
-  }
+  },
   "scripts": {
     "start": "grunt connect"
   }
