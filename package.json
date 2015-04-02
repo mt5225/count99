@@ -9,7 +9,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "grunt connect:server"
+    "start": "grunt connect:server",
     "postinstall": "npm run start"
   }
   "engines": {
