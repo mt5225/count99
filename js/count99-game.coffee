@@ -1,4 +1,4 @@
-c99 = c99 or {}
+c99 = c99 or {}  #declare an empty blacket to holding stuff
 
 #########################
 #Define of game class
@@ -11,8 +11,11 @@ c99.Game = do ->
     @canvas = document.getElementById('game-canvas')
     @stage = new (createjs.Stage)(@canvas)
     @stage.name = 'Main Stage'
-    @gameInit()  #init game
+    #init game
+    preloader = new (c99.Preloader)(@)
+    preloader.loadGraphics()
 
+    #bind the restart game button
     restartButton = document.getElementById('restart-button')
     restartButton.onclick = ((evt) ->
       gameOverScene = document.getElementById("gameover")
@@ -60,6 +63,36 @@ c99.Game = do ->
   Count99Game
 
 ##############################################
+# Image preloader
+##############################################
+c99.Preloader = do ->
+  Preloader = (game)->
+    @game = game
+    return
+  Preloader.prototype.loadGraphics = ->
+    imageList = [
+      {name:'tile', path:'image/tile.png'}
+      {name:'hud', path:'image/hud.png'}
+      {name:'gameover', path:'image/gameover.jpg'}
+      {name:'bg', path:'image/bg.png'}
+      {name:'restartButton', path:'image/restart-button.png'}
+    ]
+    loadFiles = 0
+    c99.graphics = {}
+    for item in imageList
+      img = new Image()
+      img.onload = ((evt)->
+        loadFiles++
+        console.log "#{evt.target.src} loaded, progress=#{loadFiles}, total=#{imageList.length}"
+        if loadFiles == imageList.length
+          @game.gameInit()
+      ).bind(@)
+      img.src = item.path
+      c99.graphics[item.name] = item
+
+  Preloader
+
+##############################################
 # Define of game object: block with number
 ##############################################
 c99.GameObject = do ->
@@ -77,7 +110,7 @@ c99.GameObject = do ->
 
   p.initialize = ->
     @Container_initialize()
-    img = new (createjs.Bitmap)('image/tile.png')
+    img = new (createjs.Bitmap)(c99.graphics.tile.path) #from preloader
     img.name = @number
     @.addChild(img)
 

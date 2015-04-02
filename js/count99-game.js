@@ -7,12 +7,13 @@
   c99.Game = (function() {
     var Count99Game;
     Count99Game = function() {
-      var restartButton;
+      var preloader, restartButton;
       console.log('count99 game starts');
       this.canvas = document.getElementById('game-canvas');
       this.stage = new createjs.Stage(this.canvas);
       this.stage.name = 'Main Stage';
-      this.gameInit();
+      preloader = new c99.Preloader(this);
+      preloader.loadGraphics();
       restartButton = document.getElementById('restart-button');
       return restartButton.onclick = (function(evt) {
         var gameOverScene;
@@ -58,6 +59,52 @@
     return Count99Game;
   })();
 
+  c99.Preloader = (function() {
+    var Preloader;
+    Preloader = function(game) {
+      this.game = game;
+    };
+    Preloader.prototype.loadGraphics = function() {
+      var imageList, img, item, j, len, loadFiles, results;
+      imageList = [
+        {
+          name: 'tile',
+          path: 'image/tile.png'
+        }, {
+          name: 'hud',
+          path: 'image/hud.png'
+        }, {
+          name: 'gameover',
+          path: 'image/gameover.jpg'
+        }, {
+          name: 'bg',
+          path: 'image/bg.png'
+        }, {
+          name: 'restartButton',
+          path: 'image/restart-button.png'
+        }
+      ];
+      loadFiles = 0;
+      c99.graphics = {};
+      results = [];
+      for (j = 0, len = imageList.length; j < len; j++) {
+        item = imageList[j];
+        img = new Image();
+        img.onload = (function(evt) {
+          loadFiles++;
+          console.log(evt.target.src + " loaded, progress=" + loadFiles + ", total=" + imageList.length);
+          if (loadFiles === imageList.length) {
+            return this.game.gameInit();
+          }
+        }).bind(this);
+        img.src = item.path;
+        results.push(c99.graphics[item.name] = item);
+      }
+      return results;
+    };
+    return Preloader;
+  })();
+
   c99.GameObject = (function() {
     var GameObject, p;
     GameObject = function(number) {
@@ -72,7 +119,7 @@
     p.initialize = function() {
       var img, numText;
       this.Container_initialize();
-      img = new createjs.Bitmap('image/tile.png');
+      img = new createjs.Bitmap(c99.graphics.tile.path);
       img.name = this.number;
       this.addChild(img);
       numText = new createjs.Text(this.number, '24px Helvetica', '#ac1000');
